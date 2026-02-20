@@ -16,15 +16,19 @@ activityCompose = "1.12.4"
 composeBom = "2026.02.00"
 androidx-navigation-compose = "2.9.7"
 lifecycleViewmodelCompose = "2.10.0"
+pagingRuntimeKtx = "3.4.1"
+pagingCompose = "3.4.1"
 retrofit = "3.0.0"
 kotlinxCoroutinesTest = "1.10.2"
 mockitoCore = "5.21.0"
-mockitoKotlin = "6.1.0"
+mockitoKotlin = "6.2.3"
 turbine = "1.2.1"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 
+androidx-paging-compose = { module = "androidx.paging:paging-compose", version.ref = "pagingCompose" }
+androidx-paging-runtime-ktx = { module = "androidx.paging:paging-runtime-ktx", version.ref = "pagingRuntimeKtx" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 androidx-core-testing = { module = "androidx.arch.core:core-testing", version.ref = "coreTesting" }

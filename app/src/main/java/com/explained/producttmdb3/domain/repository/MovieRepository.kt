@@ -1,8 +1,10 @@
 package com.explained.producttmdb3.domain.repository
 
+import androidx.paging.PagingData
 import com.explained.producttmdb3.domain.model.MovieDomain
+import kotlinx.coroutines.flow.Flow
 
 
 interface MovieRepository {
-    suspend fun getTopRatedMovies() : List<MovieDomain>
+    fun getTopRatedMovies(): Flow<PagingData<MovieDomain>>
 }

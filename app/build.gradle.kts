@@ -128,4 +128,8 @@ dependencies {
 
     // Turbine
     testImplementation(libs.turbine)
+
+    // Paging 3
+    implementation(libs.androidx.paging.runtime.ktx)
+    implementation(libs.androidx.paging.compose)
 }
