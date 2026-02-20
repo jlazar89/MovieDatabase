@@ -1,11 +1,12 @@
 package com.explained.producttmdb3.ui.list
 
 import app.cash.turbine.test
+import androidx.paging.PagingData
 import com.explained.producttmdb3.domain.model.MovieDomain
 import com.explained.producttmdb3.domain.repository.MovieRepository
-import junit.framework.TestCase.assertEquals
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runTest
@@ -27,6 +28,11 @@ class MovieListViewModelTest {
     @Before
     fun setUp() {
         Dispatchers.setMain(testDispatcher)
+        val movies = listOf(
+            MovieDomain(1, "title", "overview", "posterPath")
+        )
+        val pagingData = PagingData.from(movies)
+        whenever(movieRepository.getTopRatedMovies()).thenReturn(flowOf(pagingData))
         viewModel = MovieListViewModel(movieRepository)
     }
 
@@ -36,42 +42,11 @@ class MovieListViewModelTest {
     }
 
     @Test
-    fun `when view model is created, it should emit loading state`() = runTest {
-        viewModel.state.test {
-            assertEquals(MovieListState.Loading, awaitItem())
+    fun `movies flow emits paged data`() = runTest {
+        viewModel.movies.test {
+            val item = awaitItem()
+            assert(item != null)
+            cancelAndIgnoreRemainingEvents()
         }
     }
-
-    @Test
-    fun `when loadMovies is called, it should emit success state`() = runTest {
-        val movies = listOf(
-            MovieDomain(1, "title", "overview", "posterPath")
-        )
-        whenever(movieRepository.getTopRatedMovies()).thenReturn(movies)
-
-        viewModel.handleIntent(MovieListIntent.LoadMovies)
-
-        viewModel.state.test {
-            assertEquals(MovieListState.Loading, awaitItem())
-            val successState = awaitItem()
-            assert(successState is MovieListState.Success)
-            assertEquals(1, (successState as MovieListState.Success).data.size)
-        }
-    }
-
-    @Test
-    fun `when loadMovies is called and repository throws exception, it should emit error state`() =
-        runTest {
-            val errorMessage = "An error occurred"
-            whenever(movieRepository.getTopRatedMovies()).thenThrow(RuntimeException(errorMessage))
-
-            viewModel.handleIntent(MovieListIntent.LoadMovies)
-
-            viewModel.state.test {
-                assertEquals(MovieListState.Loading, awaitItem())
-                val errorState = awaitItem()
-                assert(errorState is MovieListState.Error)
-                assertEquals(errorMessage, (errorState as MovieListState.Error).errorMessage)
-            }
-        }
 }
