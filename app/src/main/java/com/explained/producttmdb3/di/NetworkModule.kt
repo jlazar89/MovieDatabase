@@ -4,6 +4,7 @@ package com.explained.producttmdb3.di
 import com.explained.producttmdb3.data.network.AuthInterceptor
 import com.explained.producttmdb3.data.network.EndPoint
 import com.explained.producttmdb3.data.network.MovieApiService
+import com.explained.producttmdb3.data.network.TvApiService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -45,5 +46,11 @@ object NetworkModule {
     @Singleton
     fun provideMovieApiService(retrofit: Retrofit): MovieApiService {
         return retrofit.create(MovieApiService::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideTvApiService(retrofit: Retrofit): TvApiService {
+        return retrofit.create(TvApiService::class.java)
     }
 }

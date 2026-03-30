@@ -3,33 +3,33 @@ package com.explained.producttmdb3.data.repository
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
-import com.explained.producttmdb3.data.network.MovieApiService
-import com.explained.producttmdb3.data.network.MoviePagingSource
+import com.explained.producttmdb3.data.network.TvApiService
+import com.explained.producttmdb3.data.network.TvPagingSource
 import com.explained.producttmdb3.data.network.model.asDomain
 import com.explained.producttmdb3.di.IoDispatcher
 import com.explained.producttmdb3.domain.model.MediaDetailDomain
-import com.explained.producttmdb3.domain.model.MovieDomain
-import com.explained.producttmdb3.domain.repository.MovieRepository
+import com.explained.producttmdb3.domain.model.TvShowDomain
+import com.explained.producttmdb3.domain.repository.TvRepository
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
-class MovieRepositoryImpl @Inject constructor(
-    private val movieApiService: MovieApiService,
+class TvRepositoryImpl @Inject constructor(
+    private val tvApiService: TvApiService,
     @IoDispatcher private val dispatcher: CoroutineDispatcher
-) : MovieRepository {
-
-    override fun getTopRatedMovies(): Flow<PagingData<MovieDomain>> {
+) : TvRepository {
+    override fun getTopRatedTvShows(): Flow<PagingData<TvShowDomain>> {
         return Pager(
             config = PagingConfig(pageSize = 20),
-            pagingSourceFactory = { MoviePagingSource(movieApiService) }
+            pagingSourceFactory = { TvPagingSource(tvApiService) }
+
         ).flow
     }
 
-    override suspend fun getMovieDetail(movieId: Int): MediaDetailDomain {
+    override suspend fun getTvShowDetail(seriesId: Int): MediaDetailDomain {
         return withContext(dispatcher) {
-            movieApiService.getMovieDetail(movieId).asDomain()
+            tvApiService.getTvShowDetail(seriesId).asDomain()
         }
     }
 }

@@ -1,7 +1,9 @@
 package com.explained.producttmdb3.di
 
 import com.explained.producttmdb3.data.repository.MovieRepositoryImpl
+import com.explained.producttmdb3.data.repository.TvRepositoryImpl
 import com.explained.producttmdb3.domain.repository.MovieRepository
+import com.explained.producttmdb3.domain.repository.TvRepository
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -16,4 +18,10 @@ abstract class RepositoryModule {
     abstract fun bindMovieRepository(
         impl: MovieRepositoryImpl
     ): MovieRepository
+
+    @Binds
+    @Singleton
+    abstract fun bindTvRepository(
+        impl: TvRepositoryImpl
+    ): TvRepository
 }

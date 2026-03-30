@@ -29,17 +29,11 @@ import com.explained.producttmdb3.ui.navigation.Screen
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MainScreen() {
-    // The NavController is now created and owned by this MainScreen composable.
     val navController = rememberNavController()
-
-    // List of top-level destinations to show in the bottom bar
-    val bottomNavItems = listOf(Screen.Home, Screen.TvShows, Screen.Profile)
-
-    // Get the current back stack entry to determine the current screen
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentDestination = navBackStackEntry?.destination
 
-    // Determine if the current screen is a top-level destination
+    val bottomNavItems = listOf(Screen.Home, Screen.TvShows, Screen.Profile)
     val isTopLevelDestination = bottomNavItems.any { it.route == currentDestination?.route }
 
     Scaffold(
@@ -101,7 +95,6 @@ fun MainScreen() {
         }
     ) { innerPadding ->
         Box(modifier = Modifier.padding(innerPadding)) {
-            // The AppNavigation composable is called here, inside the Scaffold's content area
             AppNavigation(navController = navController)
         }
     }

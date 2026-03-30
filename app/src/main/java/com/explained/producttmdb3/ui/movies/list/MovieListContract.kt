@@ -1,4 +1,4 @@
-package com.explained.producttmdb3.ui.list
+package com.explained.producttmdb3.ui.movies.list
 
 sealed interface MovieListState {
     data object Loading : MovieListState

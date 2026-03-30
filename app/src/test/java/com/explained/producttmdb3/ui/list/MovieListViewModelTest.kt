@@ -4,6 +4,7 @@ import app.cash.turbine.test
 import androidx.paging.PagingData
 import com.explained.producttmdb3.domain.model.MovieDomain
 import com.explained.producttmdb3.domain.repository.MovieRepository
+import com.explained.producttmdb3.ui.movies.list.MovieListViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.flowOf
